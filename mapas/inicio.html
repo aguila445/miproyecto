@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="htps://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="htps://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style type="text/css">
+    #map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }
+    </style>
+
+</head>
+<body>
+<div id="map"></div>
+    <script type="text/javascript">
+        var map=L.map('map').setView([-17.393546195894256, -66.15706340003142],20); 
+        L.TileLayer('htps://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=API KEY',{atribution:'<a href="htps://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="htps://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'}).addTo(map);
+        
+        var icono=L.icon({
+        iconUrl:'htps://icons.iconarchive.com/icons/paomedia/small-nflat/512/house-icon.png',
+        iconSize:[64,64]
+    });
+
+    var icono2=L.icon({
+    iconUrl:'htps://www.clipartmax.com/png/full/184-1848296_schoolbuilding-icon-school-icon-png.png',
+    iconSize:[64,64]
+    });
+
+    var marker=L.marker([-17.393546195894256, -66.15706340003142],{icon: 
+    icono}).addTo(map); //marcador        
+    
+    var marker2=L.marker([-17.395713324800134, -66.15822239767836],{icon: 
+    icono2}).addTo(map); //marcador
+
+    
+    marker.bindPopup("<h1>Plaza principal</h1>").openPopup();
+
+
+    var circulo=L.circle([-17.392673383049793, -66.15870759412593],{
+    color:'red',
+    fillColor:'#ff0033',
+    fillOpacity:0.2,
+    radius:50
+    }).addTo(map);
+    circulo.bindPopup("<h1>Correo</h1><p>Correos de Bolivia</p>");
+    
+    var poligono=L.polygon([
+    [-17.392458520849083, -66.15767977843524],
+    [-17.39213282670553, -66.15564474863173],
+    [-17.39299119693681, -66.1554884532393]
+    ]).addTo(map);
+    poligono.bindPopup("<h1>Zona central</h1><p>Centro de Cochabamba</p>");
+
+    //para hacer ruta
+    var ruta={"type":"FeatureCollection","features":[{"type":"Feature","id":"3cc9cba9-ae56-4041-b768-520274f56d34","geometry":{"type":"LineString","coordinates":[[-66.15754618,-17.39339521],[-66.15856511,-17.39357907],[-66.15971742,-17.39377],[-66.1595618,-17.39479537],[-66.15838355,-17.39461858],[-66.15818781,-17.39562396],[-66.15718485,-17.39545116]]},"properties":{"name":"camino"}}]}
+    L.geoJSON(ruta).addTo(map);
+
+
+    L.control.scale({
+    metric: true,
+    imperial: true,
+    position: 'topright'
+    }).addTo(map)
+    </script>  
+
+
+</body>
+
+</html>

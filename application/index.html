@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>generar login</title>
+	  
+		<scrip src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="stylecss">
+		</head>	
+<body>
+	  <div class="input-group mb-3">
+		<input type="text" class="caja" id="resultado" name="password">
+		<input class="button" type="button" value="generar password" name="enviar" onclick="generar()">
+	  </div>
+
+</body>
+</html>
+<script type="text/javascript">
+function generar()
+{
+	$.ajax(
+		{
+			url: 'ramdom.php',
+			type: 'post',
+			success: function(reponse)
+			{
+				$("#resultado").val(reponse);			
+			}
+		}
+	);
+}
+</script>
