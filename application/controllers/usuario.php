@@ -11,7 +11,7 @@ class Usuarios extends CI_Controller
             if ($this->session->userdata('tipo') == 'cliente') {
                 redirect('cliente/panel', 'refresh');
             } elseif ($this->session->userdata('tipo') == 'conductor') {
-                redirect('conductore/panel', 'refresh');
+                redirect('conductor/panel', 'refresh');
             } else {
                 // Puedes manejar otros tipos de usuarios aquí
                 // Por ejemplo, si tienes usuarios administradores
