@@ -1,234 +1,96 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Conductor extends CI_Controller
-{
-    public function indexlte()
+    class Conductor extends CI_Controller
     {
-        if($this->session->userdata('login'))
+        public function indexlte()
         {
-            $lista=$this->conductor_model->listaconductores();
-            $data['conductores']=$lista;
+            if ($this->session->userdata('login')) {
+                $conductores = $this->conductor_model->listaconductores();
+                $data['conductor'] = $conductores;
     
-            $this ->load->view('inclte/cabecera');
-            $this ->load->view('inclte/menusuperior');
-            $this ->load->view('inclte/menulateral');
-            $this ->load->view('est_listalte',$data);
-            $this ->load->view('inclte/pie');
-        }
-        else
-        {
-            redirect('usuarios/index','refresh');
-        }
-        
-    }
-    public function subircurriculum()
-    {
-        if ($this->session->userdata('login')) {
-            $data['idEstudiante'] = $_POST['idEstudiante'];
-            $this->load->view('inclte/cabecera');
-            $this->load->view('inclte/menusuperior');
-            $this->load->view('inclte/menulateral');
-            $this->load->view('subirform', $data);
-            $this->load->view('inclte/pie');
-        } else {
-            redirect('usuarios/index/2', 'refresh');
-        }
-    }
-    public function subir()
-    {
-        if ($this->session->userdata('login')) {
-            $idEstudiante = $_POST['idEstudiante'];
-            $nombreArchivo = $idEstudiante . ".pdf";
-
-            $config['upload_path'] = './uploads/estudiantes/';
-            $config['file_name'] = $nombreArchivo;
-
-            $direccion = "./uploads/estudiantes/" . $nombreArchivo;
-            if (file_exists($direccion)) 
-            {
-                unlink($direccion);
+                $this->load->view('inclte/cabecera');
+                $this->load->view('inclte/menusuperior');
+                $this->load->view('inclte/menulateral');
+                $this->load->view('conductor/cond_listalte', $data);
+                $this->load->view('inclte/pie');
+            } else {
+                redirect('usuario/index', 'refresh');
             }
-
-            $config['allowed_types'] = 'png|pdf';
-            $this->load->library('upload', $config);
-
-            if (!$this->upload->do_upload()) 
-            {
-                $data['error'] = $this->upload->display_errors();
-            }
-            else
-             {
-                $data['curriculum'] = $nombreArchivo;
-                $this->estudiante_model->modificarestudiante($idEstudiante, $data);
-                $this->upload->data();
-            }
-            redirect('estudiante/indexlte', 'refresh');
-        } 
-        else 
-        {
-            redirect('usuarios/index/2', 'refresh');
         }
-    }
     
-    public function agregar()
-    {
-        //mostrar un formulario(vista) para agregar nuevo estudiante
-        $this ->load->view('inclte/cabecera');
-        $this ->load->view('inclte/menusuperior');
-        $this ->load->view('inclte/menulateral');
-        $this ->load->view('inscribirform',);
-        $this ->load->view('inclte/pie');
-    }
-
-    public function inscribir()
-    {
-            $data['infocarrera']=$this->carrera_model->listaCarreras();
-
-            $this ->load->view('inclte/cabecera');
-            $this ->load->view('inclte/menu');
-            $this ->load->view('inscribirform',$data);
-            $this ->load->view('inclte/pie');
-    }
-
-    public function inscribirdb()// se construye $data
-    {
-        //$data es un array relacional
-        // atrib. DB       Y   FORMULARIO
-        $data['nombre']=$_POST['nombre'];
-        $data['primerApellido']=$_POST['apellido1'];// el primero es de la db y el segundo del formulario
-        $data['segundoApellido']=$_POST['apellido2'];
-        $data['idCarrera']=$_POST['curriculum'];
-        
-        $this->carrera_model->inscribirEstudiante($idCarrera,$data);//invocamos el metodo
-
-        redirect('estudiante/indexlte','refresh');
-    }
+        public function subircurriculum()
+        {
+            if ($this->session->userdata('login')) {
+                $data['idConductor'] = $_POST['idConductor'];
+                $this->load->view('inclte/cabecera');
+                $this->load->view('inclte/menusuperior');
+                $this->load->view('inclte/menulateral');
+                $this->load->view('conductor/subirform', $data);
+                $this->load->view('inclte/pie');
+            } else {
+                redirect('usuario/index/2', 'refresh');
+            }
+        }
     
-
-    public function agregardb()// se construye $data
-    {
-        //cargar libreria form_validation solo para este metodo
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('nombre','nombre de ususario','required|min_length[5]|max_length[12],array('required'=>'se requiere el nombre','min_length'=>'por lo menos 5 caracteres','max_length'=>'maximo 12 caracteres'));
-        //defino reglas y mensajes
-        $this->form_validation->set_rules('apellido1','primer apellido','required|min_length[5]|max_length[12],array('required'=>'se requiere el nombre','min_length'=>'por lo menos 5 caracteres','max_length'=>'maximo 12 caracteres'));
-
-        if($this->form_validation->run()==FALSE)
+        public function subir()
         {
-            //si no supera la validacion, cargamos nuevamente el formulario
-            $this ->load->view('inclte/cabecera');
-            $this ->load->view('inclte/menusuperior');
-            $this ->load->view('inclte/menulateral');
-            $this ->load->view('est_formulario');
-            $this ->load->view('inclte/pie');            
+            if ($this->session->userdata('login')) {
+                $idConductor = $_POST['idConductor'];
+                $nombreArchivo = $idConductor . ".pdf";
+    
+                $config['upload_path'] = './uploads/conductor/';
+                $config['file_name'] = $nombreArchivo;
+    
+                $direccion = "./uploads/conductores/" . $nombreArchivo;
+                if (file_exists($direccion)) {
+                    unlink($direccion);
+                }
+    
+                $config['allowed_types'] = 'pdf';
+                $this->load->library('upload', $config);
+    
+                if (!$this->upload->do_upload()) {
+                    $data['error'] = $this->upload->display_errors();
+                } else {
+                    $data['curriculum'] = $nombreArchivo;
+                    $this->conductor_model->modificarconductor($idConductor, $data);
+                    $this->upload->data();
+                }
+                redirect('conductor/indexlte', 'refresh');
+            } else {
+                redirect('usuario/index/2', 'refresh');
+            }
         }
-        else
+    
+        // Resto de los métodos adaptados según tus necesidades
+        // ...
+    
+        public function invitadolte()
         {
-        $data['nombre']=$_POST['nombre'];
-        $data['primerApellido']=$_POST['apellido1'];// el primero es de la db y el segundo del formulario
-        $data['segundoApellido']=$_POST['apellido2'];
-        $data['nota']=$_POST['nota'];
+            if ($this->session->userdata('login')) {
+                $this->load->view('inclte/cabecera');
+                $this->load->view('inclte/menusuperior');
+                $this->load->view('inclte/menulateral');
+                $this->load->view('conductor/cond_invitado');
+                $this->load->view('inclte/pie');
+            } else {
+                redirect('usuario/index/2', 'refresh');
+            }
         }
-        //$data es un array relacional
-        // atrib. DB       Y   FORMULARIO
-        $data['nombre']=$_POST['nombre'];
-        $data['primerApellido']=$_POST['apellido1'];// el primero es de la db y el segundo del formulario
-        $data['segundoApellido']=$_POST['apellido2'];
-        $data['nota']=$_POST['nota'];
-        
-
-        $this->estudiante_model->agregarestudiante($data);//invocamos el metodo
-
-        redirect('estudiante/indexlte','refresh');
-    }
-
-    public function eliminardb()
-    {
-        $idEstudiante=$_POST['idEstudiante'];// tal como está en el formulario
-        $this->estudiante_model->eliminarestudiante($idEstudiante);
-        redirect('estudiante/indexlte','refresh');
-    }
-   
-    public function modificar()
-    {
-        $idEstudiante=$_POST['idEstudiante'];
-        $data['infProducto']=$this->estudiante_model->recuperarestudiante($idEstudiante);
-
-        $this ->load->view('inclte/cabecera');
-        $this ->load->view('inclte/menusuperior');
-        $this ->load->view('inclte/menulateral');
-        $this ->load->view('est_modificar',$data);
-        $this ->load->view('inclte/pie');
-    }
-
-    public function modificardb()
-    {
-        $idEstudiante=$_POST['idEstudiante'];
-        // el primero como en base
-        $data['nombre']=$_POST['nombre'];
-        $data['primerApellido']=$_POST['apellido1'];
-        $data['segundoApellido']=$_POST['apellido2'];
-        $this->estudiante_model->modificarestudiante($idEstudiante,$data);
-
-        redirect('estudiante/indexlte','refresh');
-    }
-    public function deshabilitarbd()
-    {
-        $idEstudiante=$_POST['idEstudiante'];
-        $data['habilitado']='0';
-
-        $this->estudiante_model->modificarestudiante($idEstudiante,$data);
-
-        redirect('estudiante/indexlte','refresh');
-
-    }
-    public function deshabilitados()
-	{
-        $lista=$this->estudiante_model->listaestudiantedeshabilitado();
-        $data['estudiante']=$lista;
-
-        $this ->load->view('inclte/cabecera');
-        $this ->load->view('inclte/menusuperior');
-        $this ->load->view('inclte/menulateral');
-		$this->load->view('est_listadeshabilitado',$data);
-        $this ->load->view('inclte/pie');
-		
-	}
-    public function habilitarbd()
-    {
-        $idEstudiante=$_POST['idEstudiante'];
-        $data['habilitado']='1';
-
-        $this->estudiante_model->modificarestudiante($idEstudiante,$data);
-
-        redirect('estudiante/deshabilitados','refresh');
-
-    }
-    public function invitadolte()
-    {
-        if ($this->session->userdata('login')) {
-            $this ->load->view('inclte/cabecera');
-            $this ->load->view('inclte/menusuperior');
-            $this ->load->view('inclte/menulateral');
-            $this->load->view('est_invitado');
-            $this->load->view('inclte/pie');
-        } else {
-            redirect('usuarios/index/2', 'refresh');
-        }
-    }
+    
+    
 
     public function listapdf()
     {
         if($this->session->userdata('login'))
-        {  $lista=$this->estudiante_model->listaestudiantes();
+        {  $lista=$this->conductor_model->listaconductores();
             $lista=$lista->result();
 
             $this->pdf=new pdf();
             $this->pdf->AddPage();
             $this->pdf->AliasNbPages();
-            $this->pdf->SetTitle("lista de estudiantes");
+            $this->pdf->SetTitle("lista de conductores");
             $this->pdf->SetLeftMargin(15);
             $this->pdf->SetRightMargin(15);
             $this->pdf->SetFillColor(210,210,210);
@@ -236,7 +98,7 @@ class Conductor extends CI_Controller
             //I italic  U underline  B bold  '' normal--ES EL ORDEN EN EL PARENTESIS
             $this->pdf->Ln(5);
             $this->pdf->Cell(30);
-            $this->pdf->SetLeftMargin(120,10,'LISTA DE ESTUDIANTES',0,0,'c',1);
+            $this->pdf->SetLeftMargin(120,10,'LISTA DE conductores',0,0,'c',1);
             // ancho,alto,texto o contenido,borde,generacion sgte celda
             //0 derecha 1 sgte linea 2 debajo
             // alineacion lcr, fill 0 1 
@@ -260,7 +122,7 @@ class Conductor extends CI_Controller
 
             }
 
-            $this->pdf->output("lista de estudiantes.pdf","I");
+            $this->pdf->output("lista de conductores.pdf","I");
             //I mostrar en navegador
             //D forzar descarga
         }
@@ -386,5 +248,5 @@ public function proformapdf()
 
     $this->pdf->output("proforma.pdf","I");  // I--> nueva ventana, D--> descarga
 }
-
 }
+

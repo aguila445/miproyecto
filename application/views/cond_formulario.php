@@ -27,16 +27,49 @@
                 <h3 class="card-title"> Crear Conductor </h3>
               </div>
               <!-- /.card-header -->
+              
               <div class="card-body">
                 <?php
-                    echo form_open_multipart('estudiante/agregardb')
+                    echo form_open_multipart('conductor/agregardb')
                 ?>
-                    <input type="text" name="nombre" id="" placeholder="Escriba el nombre" class="form-control" value= >
-                    <input type="text" name="apellido1" id="" placeholder="Escriba el primer apellido" class="form-control">
-                    <input type="text" name="apellido2" id="" placeholder="Escriba el segundo apellido" class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-primary">AGREGAR</button>
-                <?php
+                       <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" required>
+    <br>
+
+    <label for="primerApellido">Primer Apellido:</label>
+    <input type="text" name="primerApellido" id="primerApellido" required>
+    <br>
+
+    <label for="segundoApellido">Segundo Apellido:</label>
+    <input type="text" name="segundoApellido" id="segundoApellido">
+    <br>
+
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" name="email" id="email" required>
+    <br>
+
+    <label for="numeroMovil">Número de Móvil:</label>
+    <input type="text" name="numeroMovil" id="numeroMovil" required>
+    <br>
+
+    <label for="direccion">Dirección:</label>
+    <input type="text" name="direccion" id="direccion" required>
+    <br>
+
+    <label for="foto">Foto:</label>
+    <input type="file" name="foto" id="foto">
+    <br>
+
+    <label for="latitud">Latitud:</label>
+    <input type="text" name="latitud" id="latitud">
+    <br>
+
+    <label for="longitud">Longitud:</label>
+    <input type="text" name="longitud" id="longitud">
+    <br>
+
+    <input type="submit" value="Registrar"
+               
                 echo form_close()
                 ?>
                 <?php    

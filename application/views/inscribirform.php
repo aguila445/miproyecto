@@ -24,40 +24,29 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> Inscribir Estudiante </h3>
+                <h3 class="card-title"> Inscribir conductor </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <?php
-                    echo form_open_multipart('estudiante/inscribirdb')
-                ?>
-                    <input type="text" name="nombre" id="" placeholder="Escriba el nombre" class="form-control">
-                    <input type="text" name="apellido1" id="" placeholder="Escriba el primer apellido" class="form-control">
-                    <input type="text" name="apellido2" id="" placeholder="Escriba el segundo apellido" class="form-control">
-                    <select name="idCarrera" id="" class="form-control form-select form-select-lg" required>
-                    <option value="" disabled selected >selecione una..</option>
-                   
-                  <?php
-                  foreach($infocarreras-> result() as $row)
-                  {
-                  ?>
-                  <option value="<?php echo $row->idCarrera; ?>">
-                    <?php echo $row->idCarrera;?>
-                </option>
-                  
-                  <?php
-                  }
-                  ?>
-                  </select>
-                    <br>
-                    <button type="submit" class="btn btn-primary">AGREGAR</button>
-                <?php
-                echo form_close()
-                ?>
-                <?php    
-                // </form>
-                ?>
-              </div>
+    <?php
+    echo form_open_multipart('conductor/agregardb')
+    ?>
+    <input type="text" name="nombre" placeholder="Nombre" class="form-control">
+    <input type="text" name="primerApellido" placeholder="Primer Apellido" class="form-control">
+    <input type="text" name="segundoApellido" placeholder="Segundo Apellido" class="form-control">
+    <input type="text" name="email" placeholder="Email" class="form-control">
+    <input type="text" name="numeroMovil" placeholder="Número de Móvil" class="form-control">
+
+    <!-- Subir foto del conductor -->
+    <label for="foto">Foto del Conductor:</label>
+    <input type="file" name="foto" class="form-control-file">
+    
+    <button type="submit" class="btn btn-primary">AGREGAR</button>
+    <?php
+    echo form_close()
+    ?>
+</div>
+
               <!-- /.card-body -->
             </div>
             <!-- /.card -->

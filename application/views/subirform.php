@@ -28,16 +28,16 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <?php
-                    echo form_open_multipart('estudiante/subir')
-                ?>
-                    <input type="hidden" name="idEstudiante"  value="<?php echo $idEstudiante; ?>">
-                    <input type="file" name="userfile"  class="form-control">
-                    <br>
-                    <button type="submit" class="btn btn-primary">SUBIR</button>
-                <?php
-                echo form_close()
-                ?>
+              <?php
+echo form_open_multipart('conductor/subir'); // Cambia 'conductor' por el controlador correspondiente si es diferente
+?>
+<input type="hidden" name="idConductor" value="<?php echo $idConductor; ?>">
+<input type="file" name="userfile" class="form-control">
+<br>
+<button type="submit" class="btn btn-primary">SUBIR</button>
+<?php
+echo form_close();
+?>
                 <?php    
                 // </form>
                 ?>

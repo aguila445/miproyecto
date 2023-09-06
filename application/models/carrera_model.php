@@ -7,15 +7,15 @@
             return $this->db->get();
         }
         
-      public function inscribirEstudiante($idCarrera,$data)
+      public function inscribirconductor($idCarrera,$data)
       {
         $this->db->trans_start();   //aqui inicia la transaccion
     
-        $this->db->insert('estudiante',$data);  //insertamos estudiante
-        $idEstudiante=$this->db->insert_id();   //recupera el ultimo id insertado
+        $this->db->insert('conductor',$data);  //insertamos conductor
+        $idconductor=$this->db->insert_id();   //recupera el ultimo id insertado
 
         $data2['idCarrera']=$idCarrera; // creamos data2
-        $data2['idEstudiante']=$idEstudiante;   //creamos data2
+        $data2['idconductor']=$idconductor;   //creamos data2
         $this->db->insert('inscripcion',$data2); //hasta aqui no hay transacciones, solo registra en la tabla inscripcion
     
         $this->db->trans_complete();    //aqui termina la transaccion
